@@ -99,7 +99,7 @@ function draw() {
     gameOver.visible = true;
     restart.visible = true;
     
-    //set velcity of each game object to 0
+    //set velocity of each game object to 0
     ground.velocityX = 0;
     trex.velocityY = 0;
     obstaclesGroup.setVelocityXEach(0);
