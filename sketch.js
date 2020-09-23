@@ -1,7 +1,7 @@
 var PLAY = 1;
 var END = 0;
 var gameState = PLAY;
-   
+
 var colors;
 
 var trex, trex_running, trex_collided;
@@ -14,7 +14,6 @@ var score=0;
 
 var gameOver, restart;
 
-localStorage["HighestScore"] = 0;
 
 function preload(){
   trex_running =   loadAnimation("trex1.png","trex3.png","trex4.png");
@@ -37,11 +36,7 @@ function preload(){
 
 function setup() {
   createCanvas(600, 200);
-  
     score = 0;
-  
-  
-  
   trex = createSprite(50,180,20,50);
   
   trex.addAnimation("running", trex_running);
@@ -144,11 +139,14 @@ function spawnClouds() {
     cloud.velocityX = -3;
     
      //assign lifetime to the variable
-    cloud.lifetime = 230;
+    if(cloud.x<600){
+    cloud.destroy();
+    }
+    
     
     //adjust the depth
-    cloud.depth = trex.depth;
-    trex.depth = trex.depth + 1;
+    cloud.depth = trex.depth-10;
+    //trex.depth = trex.depth + 1;
     
     //add each cloud to the group
     cloudsGroup.add(cloud);
@@ -182,7 +180,9 @@ function spawnObstacles() {
     
     //assign scale and lifetime to the obstacle           
     obstacle.scale = 0.5;
-    obstacle.lifetime = 300;
+    if(obstacle.x<600){
+    obstacle.destroy();
+    }
     //add each obstacle to the group
     obstaclesGroup.add(obstacle);
   }
@@ -198,10 +198,7 @@ function reset(){
   
   trex.changeAnimation("running",trex_running);
   
-  if(localStorage["HighestScore"]<score){
-    localStorage["HighestScore"] = score;
-  }
-  console.log(localStorage["HighestScore"]);
+  
   
   score = 0;
   
